@@ -1,0 +1,21 @@
+grammar Grammar
+  rule comparison_operator
+    left_side maybe_space operator maybe_space right_side <ComparisonOperation>
+  end
+
+  rule left_side
+    [\d]+
+  end
+
+  rule right_side
+    [\d]+
+  end
+
+  rule operator
+    '='
+  end
+
+  rule maybe_space
+    [\s]*
+  end
+end
