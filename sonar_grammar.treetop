@@ -1,0 +1,37 @@
+grammar SonarGrammar
+  rule query
+    key_value_pair maybe_joiner*
+  end
+
+  rule key_value_pair
+    key maybe_space separator maybe_space value maybe_space
+  end
+
+  rule key
+    [\w]+
+  end
+
+  rule separator
+    ':'
+  end
+
+  rule value
+    [\w]+
+  end
+
+  rule maybe_space
+    [\s]*
+  end
+
+  rule maybe_joiner
+    and* / or*
+  end
+
+  rule and
+    /and/i
+  end
+
+  rule or
+    /or/i
+  end
+end
