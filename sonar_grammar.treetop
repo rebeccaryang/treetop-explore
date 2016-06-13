@@ -1,10 +1,18 @@
 grammar SonarGrammar
   rule query
-    key_value_pair maybe_joiner*
+    date maybe_space properties
+  end
+
+  rule properties
+    joiner maybe_space key_value_pairs <SonarProperties>
+  end
+
+  rule key_value_pairs
+    (key_value_pair maybe_space)*
   end
 
   rule key_value_pair
-    key maybe_space separator maybe_space value maybe_space
+    key maybe_space separator maybe_space value
   end
 
   rule key
@@ -23,15 +31,41 @@ grammar SonarGrammar
     [\s]*
   end
 
-  rule maybe_joiner
-    and* / or*
+  rule joiner
+    (and / or)
   end
 
   rule and
-    /and/i
+    'and'i
   end
 
   rule or
-    /or/i
+    'or'i
+  end
+
+  rule slash_or_dash
+    '/' / '-'
+  end
+
+  rule comma
+    ','
+  end
+
+  rule date
+    (month maybe_space slash_or_dash maybe_space day maybe_space slash_or_dash maybe_space year) /
+      (month maybe_space day maybe_letters maybe_space comma year)
+  end
+
+  rule year
+    (2)(0)[0-2][0-9]
+  end
+
+  rule month
+    ([1-9]|(1)[0-2]) / 'January' / 'February' / 'March' / 'April' / 'May' / 'June' / 'July' /
+      'August' / 'September' / 'October' / 'November' / 'December'
+  end
+
+  rule day
+    ((0*)([1-9])|(1|2)([0-9])|(3)(0|1))
   end
 end
